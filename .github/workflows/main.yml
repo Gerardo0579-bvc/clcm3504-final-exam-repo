@@ -56,7 +56,8 @@ jobs:
             
             # Create, run and push image
             sudo docker-compose --env-file envfile up -d
-            sudo docker tag "$(sudo docker images -q clcm3504-finalexam-image)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
+            # To TAG if necessary
+            # sudo docker tag "$(sudo docker images -q gerardo0579bvc/clcm3504-finalexam-image:v$VERSION)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             
             # Update VERSION
