@@ -51,7 +51,6 @@ jobs:
             docker rm $(docker ps -a -q)
             
             # Configure env variable
-            if [[ -z $VERSION ]]; then export VERSION=1; else export VERSION=$((VERSION + 1)); fi
             sudo echo -e "VERSION=$VERSION" | sudo tee envfile
             
             # Login into Docker account and configure Dockerfile
@@ -62,7 +61,11 @@ jobs:
             sudo docker-compose --env-file envfile up -d
             # To TAG if necessary
             # sudo docker tag "$(sudo docker images -q gerardo0579bvc/clcm3504-finalexam-image:v$VERSION)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
-            sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION            
+            sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
+            
+            # Update VERSION
+            export VERSION=$((VERSION + 1))
+            echo $VERSION
             
             
             
