@@ -29,7 +29,16 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+          script: |          
+            # Configure env variable
+            if [ -f "envfile" ]; then
+              export VERSION=$(grep -o '[0-9]*' envfile)
+              sudo echo -e "VERSION=$((VERSION + 1))" | sudo tee ../envfile
+            else
+              sudo echo -e "VERSION=1" | sudo tee envfile
+            fi
+            export VERSION=$(grep -o '[0-9]*' envfile)
+            
             # Configure directories
             cd home
             sudo rm -rf project
@@ -49,15 +58,6 @@ jobs:
             # Stopping currently running containers
             docker stop $(docker ps -q)
             docker rm $(docker ps -a -q)
-            
-            # Configure env variable
-            if [ -f "../envfile" ]; then
-              sudo echo -e "VERSION=$((VERSION + 1))" | sudo tee ../envfile
-            else
-              export VERSION=$(grep -o '[0-9]*' ../envfile)
-              sudo echo -e "VERSION=1" | sudo tee ../envfile
-            fi
-            export VERSION=$(grep -o '[0-9]*' ../envfile)
                         
             # Login into Docker account and configure Dockerfile
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
