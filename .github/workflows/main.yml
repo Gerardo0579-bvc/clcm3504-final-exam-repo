@@ -54,6 +54,9 @@ jobs:
             : ${VERSION:=1}
             sudo echo -e "VERSION=$VERSION" | sudo tee envfile
             
+            # Update VERSION
+            VERSION=$((VERSION + 1))
+            
             # Login into Docker account and configure Dockerfile
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
             sudo echo -e "FROM httpd:2.4\nCOPY ./clcm3504-finalexam-folder/ ." | sudo tee Dockerfile
@@ -64,6 +67,4 @@ jobs:
             # sudo docker tag "$(sudo docker images -q gerardo0579bvc/clcm3504-finalexam-image:v$VERSION)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             
-            # Update VERSION
-            VERSION=$((VERSION + 1))
             
