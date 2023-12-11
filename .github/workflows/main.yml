@@ -33,7 +33,7 @@ jobs:
             # Configure env variable
             if [ -f "envfile" ]; then
               export VERSION=$(grep -o '[0-9]*' envfile)
-              sudo echo -e "VERSION=$((VERSION + 1))" | sudo tee ../envfile
+              sudo echo -e "VERSION=$((VERSION + 1))" | sudo tee envfile
             else
               sudo echo -e "VERSION=1" | sudo tee envfile
             fi
