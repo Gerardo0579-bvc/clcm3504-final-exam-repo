@@ -52,6 +52,7 @@ jobs:
             
             # Configure env variable
             : ${VERSION:-1}
+            echo $VERSION
             sudo echo -e "VERSION=$VERSION" | sudo tee envfile
             
             # Login into Docker account and configure Dockerfile
