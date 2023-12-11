@@ -51,7 +51,7 @@ jobs:
             docker rm $(docker ps -a -q)
             
             # Configure env variable
-            if [[ -z $VERSION ]]; then VERSION=1; else VERSION=$((VERSION + 1)); fi
+            VERSION=$((VERSION + 1))
             sudo echo -e "VERSION=$VERSION" | sudo tee envfile
             
             # Login into Docker account and configure Dockerfile
