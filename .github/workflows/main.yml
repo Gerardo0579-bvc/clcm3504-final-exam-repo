@@ -48,7 +48,7 @@ jobs:
             
             # Configure env variable
             : ${VERSION:=1}
-            sudo echo "VERSION=$VERSION" > envfile
+            sudo echo -e "VERSION=$VERSION" | sudo tee envfile
             
             # Login into Docker account and configure Dockerfile
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
