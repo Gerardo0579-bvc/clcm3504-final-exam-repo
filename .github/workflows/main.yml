@@ -54,6 +54,7 @@ jobs:
             if [ -f "../envfile" ]; then
               sudo echo -e "VERSION=$((VERSION + 1))" | sudo tee ../envfile
             else
+              export VERSION=$(grep -o '[0-9]*' ../envfile)
               sudo echo -e "VERSION=1" | sudo tee ../envfile
             fi
             export VERSION=$(grep -o '[0-9]*' ../envfile)
