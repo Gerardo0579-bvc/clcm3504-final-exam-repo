@@ -31,6 +31,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home
+            sudo rm -rf project
             sudo mkdir -p project/clcm3504-finalexam-folder
             sudo mv docker-compose.yml project
             sudo find . -type f -not -path '*/ec2-user/*' | sudo xargs mv -t project/clcm3504-finalexam-folder
@@ -42,6 +43,5 @@ jobs:
             sudo docker tag "$(sudo docker images -q clcm3504-finalexam-image)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             cd /home
-            sudo rm -rf project
             export VERSION=$((VERSION + 1))
             
