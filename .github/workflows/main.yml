@@ -30,25 +30,36 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            : ${VERSION:=1}
+            # Configure directories
             cd home
             sudo rm -rf project
             sudo mkdir -p project/clcm3504-finalexam-folder
             sudo mv docker-compose.yml project
             sudo mv README.md project/clcm3504-finalexam-folder
             cd project
+            
+            # Install docker and docker-compose
             sudo yum -y update
             sudo yum install -y docker
             sudo systemctl start docker
             sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-            sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+            
+            # Configure env variable
+            : ${VERSION:=1}
+            echo "VERSION=$VERSION" > envfile
+            docker-compose --env-file envfile up -d
+            
+            # Login into Docker account and configure Dockerfile
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
             sudo echo -e "FROM httpd:2.4\nCOPY ./clcm3504-finalexam-folder/ " | sudo tee Dockerfile
+            
+            # Create, run and push image
             sudo docker-compose up -d
             sudo docker tag "$(sudo docker images -q clcm3504-finalexam-image)" gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
-            cd /home
+            
+            # Update VERSION
             export VERSION=$((VERSION + 1))
             
