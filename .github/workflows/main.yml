@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo /home
+            cd /home
             sudo mkdir -p project/clcm3504-finalexam-folder
             sudo mv docker-compose.yml project
             sudo find . -type f -not -path '*/ec2-user/*' | sudo xargs mv -t project/clcm3504-finalexam-folder
