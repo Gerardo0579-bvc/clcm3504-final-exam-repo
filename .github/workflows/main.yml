@@ -55,9 +55,10 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
             sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-            # Stopping currently running containers
+            # Stopping currently running containers and delete images (to avoid fill memory and space)
             docker stop $(docker ps -q)
             docker rm $(docker ps -a -q)
+            docker images prune -a
                         
             # Login into Docker account and configure Dockerfile
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
