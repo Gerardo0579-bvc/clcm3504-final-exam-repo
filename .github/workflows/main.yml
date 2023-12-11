@@ -35,11 +35,12 @@ jobs:
             sudo rm -rf project
             sudo mkdir -p project/clcm3504-finalexam-folder
             sudo mv docker-compose.yml project
-            sudo mv README project/clcm3504-finalexam-folder
+            sudo mv README.md project/clcm3504-finalexam-folder
             cd project
             sudo yum -y update
             sudo yum install -y docker
             sudo systemctl start docker
+            sudo yum install docker-compose-plugin
             sudo docker login -u="gerardo0579bvc" -p=${{ secrets.DOCKER_PASS }} docker.io
             sudo echo -e "FROM httpd:2.4\nCOPY ./clcm3504-finalexam-folder/ " | sudo tee Dockerfile
             sudo docker-compose up -d
