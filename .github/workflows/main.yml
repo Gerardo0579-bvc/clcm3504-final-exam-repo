@@ -65,5 +65,5 @@ jobs:
             sudo docker push gerardo0579bvc/clcm3504-finalexam-image:v$VERSION
             
             # Update VERSION
-            export VERSION=$((VERSION + 1))
+            VERSION=$((VERSION + 1))
             
